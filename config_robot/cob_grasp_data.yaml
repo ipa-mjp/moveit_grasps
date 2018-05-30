@@ -1,7 +1,9 @@
-base_link: 'world'
+
+arm_name: 'arm_left'
+base_link: 'base_link'
 # =====================================================
 arm_left:
-    end_effector_name: 'gripper_left'  #ee group name
+    end_effector_name: 'moveit_gripper_left'  #ee group name
 
     #actuated joints in end effector
     joints : ['gripper_finger_1_joint', 'gripper_finger_2_joint']
@@ -18,6 +20,7 @@ arm_left:
     #grasp_pose_to_eef : [-0.14, 0, 0] # NOTE: use when tip of arm is NOT left_gripper
     #grasp_pose_to_eef :  [-0.095, 0, 0] # NOTE: use when tip of arm is left_gripper. CALCULATED
     grasp_pose_to_eef_translation :  [0, 0.10, 0.10] # NOTE: use when tip of arm is left_gripper. HACK
+    grasp_pose_to_eef_transform : [0, 0, -0.115, -1.5708, 3.14159, 0]
 
     #desired pose from end effector to grasp - [r, p, y]
     grasp_pose_to_eef_rotation : [0, 0, 0] # 1.5707 = PI/2

@@ -48,10 +48,10 @@
 
   <!-- COB-->
   <group if="$(arg cob)">
-    <include file="$(find ipa_moveit_bringup)/launch/planning_context.xml">
+    <!--include file="$(find ipa_moveit_bringup)/launch/planning_context.xml">
       <arg name="load_robot_description" value="true"/>
       <arg name="robot" value="cob4-10"/>
-    </include>
+    </include-->
 
     <group ns="moveit_grasps_test">
       <!-- Which arm to use -->

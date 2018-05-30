@@ -141,6 +141,11 @@ bool GraspData::loadGraspData(const ros::NodeHandle& nh, const std::string& end_
   // Convert generic grasp pose to this end effector's frame of reference, approach direction for short
 
   // Orientation
+  ROS_WARN_STREAM(grasp_pose_to_eef_transform.size());
+
+  for (auto it = grasp_pose_to_eef_transform.begin(); it!= grasp_pose_to_eef_transform.end(); ++it)
+	  ROS_INFO_STREAM(*it);
+
   ROS_ASSERT(grasp_pose_to_eef_transform.size() == 6);
   grasp_pose_to_eef_pose_ = rviz_visual_tools::RvizVisualTools::convertFromXYZRPY(grasp_pose_to_eef_transform);
 
