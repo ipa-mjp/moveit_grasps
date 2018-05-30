@@ -1,0 +1,73 @@
+<launch>
+
+  <!-- Launch grap_test_rviz.launch to visualize this test -->
+
+  <!-- Debug -->  
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
+
+  <!-- Verbose mode -->
+  <arg name="verbose" default="false" />
+  <arg unless="$(arg verbose)" name="command_args" value="" />
+  <arg     if="$(arg verbose)" name="command_args" value="--verbose" />
+
+  <!-- Choose robot and arm -->
+  <arg name="jacob" default="false" />
+  <arg name="baxter" default="false" />
+  <arg name="hand" default="false" />
+  <arg name="cob" default="true" />
+
+  <!-- JACOB -->
+  <group if="$(arg jacob)">
+    <include file="$(find jacob_moveit_config)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="true"/>
+    </include>
+
+    <group ns="moveit_grasps_test">
+      <!-- Which arm to use -->
+      <param name="ee_group_name" value="gripper_left"/>      
+      <rosparam command="load" file="$(find moveit_grasps)/config_robot/jacob_grasp_data.yaml"/>
+    </group>
+  </group>
+
+  <!-- BAXTER-->
+  <group if="$(arg baxter)">
+    <include file="$(find baxter_moveit_config)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="true"/>
+    </include>
+
+    <group ns="moveit_grasps_test">
+      <!-- Which arm to use -->
+      <param unless="$(arg hand)" name="ee_group_name" value="left_hand" />
+      <param     if="$(arg hand)" name="ee_group_name" value="right_hand" />
+
+      <rosparam command="load" file="$(find moveit_grasps)/config_robot/baxter_grasp_data.yaml"/>
+    </group>
+  </group>
+
+  <!-- COB-->
+  <group if="$(arg cob)">
+    <include file="$(find ipa_moveit_bringup)/launch/planning_context.xml">
+      <arg name="load_robot_description" value="true"/>
+      <arg name="robot" value="cob4-10"/>
+    </include>
+
+    <group ns="moveit_grasps_test">
+      <!-- Which arm to use -->
+      <param unless="$(arg hand)" name="ee_group_name" value="gripper_left" />
+      <param     if="$(arg hand)" name="ee_group_name" value="gripper_right" />
+
+      <rosparam command="load" file="$(find moveit_grasps)/config_robot/cob_grasp_data.yaml"/>
+    </group>
+  </group>
+
+
+  <!-- Start the test -->
+  <node name="moveit_grasps_test" launch-prefix="$(arg launch_prefix)" pkg="moveit_grasps" 
+	type="moveit_grasps_test" output="screen" args="$(arg command_args)">
+    <rosparam command="load" file="$(find moveit_grasps)/config/grasp_debug_level.yaml"/>    
+    <!-- <rosparam command="load" file="$(find moveit_grasps)/config/grasp_default_parameters.yaml"/> -->
+  </node>
+
+</launch>
