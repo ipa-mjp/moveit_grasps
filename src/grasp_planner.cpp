@@ -41,7 +41,7 @@
 #include <moveit_grasps/state_validity_callback.h>
 
 // Parameter loading
-#include <ros_param_shortcuts/ros_param_shortcuts.h>
+//#include <rosparam_shortcuts/rosparam_shortcuts.h>
 
 namespace moveit_grasps
 {
@@ -322,11 +322,11 @@ bool GraspPlanner::computeCartesianWaypointPath(const moveit::core::JointModelGr
 
         // Compute Cartesian Path
         segmented_cartesian_traj.clear();
-        last_valid_percentage = start_state_copy.computeCartesianPathSegmented(arm_jmg, segmented_cartesian_traj,
-                                                                               ik_tip_link,
-                                                                               waypoints, global_reference_frame,
-                                                                               max_step, jump_threshold, constraint_fn,
-                                                                               kinematics::KinematicsQueryOptions());
+        //last_valid_percentage = start_state_copy.computeCartesianPathSegmented(arm_jmg, segmented_cartesian_traj,
+        //                                                                       ik_tip_link,
+        //                                                                       waypoints, global_reference_frame,
+        //                                                                       max_step, jump_threshold, constraint_fn,
+        //                                                                       kinematics::KinematicsQueryOptions());
 
         ROS_DEBUG_STREAM_NAMED("grasp_planner.waypoints","Cartesian last_valid_percentage: " << last_valid_percentage
                                << " number of segments in trajectory: " << segmented_cartesian_traj.size());
@@ -378,7 +378,7 @@ bool GraspPlanner::loadEnabledSettings(const std::string& parent_name, const std
     if (!enabled_setttings_loaded_)
     {
         enabled_setttings_loaded_ = true;
-        return ros_param_shortcuts::getBoolMap(parent_name, nh_, setting_namespace, enabled_);
+        return nh_.getParam(setting_namespace, enabled_);//ros_param_shortcuts::getBoolMap(parent_name, nh_, setting_namespace, enabled_);
     }
     return true;
 }

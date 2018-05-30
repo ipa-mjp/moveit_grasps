@@ -48,7 +48,7 @@
 #include <eigen_conversions/eigen_msg.h>
 
 // Parameter loading
-#include <ros_param_shortcuts/ros_param_shortcuts.h>
+//#include <rosparam_shortcuts/rosparam_shortcuts.h>
 
 namespace
 {
@@ -83,17 +83,31 @@ GraspFilter::GraspFilter( robot_state::RobotStatePtr robot_state,
 
   // Load visulization settings
   const std::string parent_name = "grasp_filter"; // for namespacing logging messages
-  ros_param_shortcuts::getBoolParam(parent_name, nh_, "collision_verbose", collision_verbose_);
-  ros_param_shortcuts::getBoolParam(parent_name, nh_, "statistics_verbose", statistics_verbose_);
-  ros_param_shortcuts::getDoubleParam(parent_name, nh_, "collision_verbose_speed", collision_verbose_speed_);
-  ros_param_shortcuts::getBoolParam(parent_name, nh_, "show_filtered_grasps", show_filtered_grasps_);
-  ros_param_shortcuts::getBoolParam(parent_name, nh_, "show_filtered_arm_solutions", show_filtered_arm_solutions_);
-  ros_param_shortcuts::getBoolParam(parent_name, nh_, "show_cutting_planes", show_cutting_planes_);
-  ros_param_shortcuts::getDoubleParam(parent_name, nh_, "show_filtered_arm_solutions_speed", show_filtered_arm_solutions_speed_);
-  ros_param_shortcuts::getDoubleParam(parent_name, nh_, "show_filtered_arm_solutions_pregrasp_speed",
-                                        show_filtered_arm_solutions_pregrasp_speed_);
-  ros_param_shortcuts::getBoolParam(parent_name, nh_, "show_grasp_filter_collision_if_failed", show_grasp_filter_collision_if_failed_);
 
+  nh_.getParam("collision_verbose", collision_verbose_);
+  nh_.getParam("statistics_verbose", statistics_verbose_);
+  nh_.getParam("collision_verbose_speed", collision_verbose_speed_);
+  nh_.getParam("show_filtered_grasps", show_filtered_grasps_);
+  nh_.getParam("show_filtered_arm_solutions", show_filtered_arm_solutions_);
+  nh_.getParam("show_cutting_planes", show_cutting_planes_);
+  nh_.getParam("show_filtered_arm_solutions_speed", show_filtered_arm_solutions_speed_);
+  nh_.getParam("show_filtered_arm_solutions_pregrasp_speed",
+										  show_filtered_arm_solutions_pregrasp_speed_);
+  nh_.getParam("show_grasp_filter_collision_if_failed", show_grasp_filter_collision_if_failed_);
+
+
+  /*
+  rosparam_shortcuts::getBoolParam(parent_name, nh_, "collision_verbose", collision_verbose_);
+  rosparam_shortcuts::getBoolParam(parent_name, nh_, "statistics_verbose", statistics_verbose_);
+  rosparam_shortcuts::getDoubleParam(parent_name, nh_, "collision_verbose_speed", collision_verbose_speed_);
+  rosparam_shortcuts::getBoolParam(parent_name, nh_, "show_filtered_grasps", show_filtered_grasps_);
+  rosparam_shortcuts::getBoolParam(parent_name, nh_, "show_filtered_arm_solutions", show_filtered_arm_solutions_);
+  rosparam_shortcuts::getBoolParam(parent_name, nh_, "show_cutting_planes", show_cutting_planes_);
+  rosparam_shortcuts::getDoubleParam(parent_name, nh_, "show_filtered_arm_solutions_speed", show_filtered_arm_solutions_speed_);
+  rosparam_shortcuts::getDoubleParam(parent_name, nh_, "show_filtered_arm_solutions_pregrasp_speed",
+                                        show_filtered_arm_solutions_pregrasp_speed_);
+  rosparam_shortcuts::getBoolParam(parent_name, nh_, "show_grasp_filter_collision_if_failed", show_grasp_filter_collision_if_failed_);
+*/
 
   ROS_INFO_STREAM_NAMED("grasp_filter","GraspFilter Ready.");
 }
